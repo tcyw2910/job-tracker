@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { JobApplication, type ApplicationStatus, StatusOptions } from "./types/JobApplication";
-import './app.css'
-import { v4 as uuidv4} from "uuid"; // For generating unique IDs
+import './app.css';
 import ApplicationForm from "./components/ApplicationForm";
+import ApplicationList from "./components/ApplicationList";
 
 const App = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
 
+  const addApplication = (job: JobApplication) => {
+    setApplications(prev => [...prev, job]);
+  };
+  
   return (
     <div>
       <h1>Job Application Tracker</h1>
 
-      <ApplicationForm onAdd={(newApp) => setApplications([...applications, newApp])}/>
+      <ApplicationForm onAdd={addApplication} />
+
+      <ApplicationList applications={applications} />
     </div>
   );
 };
