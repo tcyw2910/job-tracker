@@ -1,11 +1,16 @@
-
+import { useState } from "react";
+import { type JobApplication, ApplicationStatus, StatusOptions } from "./types/JobApplication";
 import './app.css'
+import { v4 as uuidv4} from "uuid"; // For generating unique IDs
 
-export function App() {
+const App = () => {
+  const [applications, setApplications] = useState<JobApplication[]>([]);
 
   return (
-    <>
-     <h1>Job Application Tracker</h1>
-    </>
-  )
-}
+    <div>
+      <h1>Job Application Tracker</h1>
+    </div>
+  );
+};
+
+export default App;
