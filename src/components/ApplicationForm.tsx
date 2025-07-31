@@ -1,13 +1,16 @@
 import { JobApplication, type ApplicationStatus, StatusOptions } from "../types/JobApplication";
 import { v4 as uuidv4 } from "uuid"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Props {
     // Function: (Parameter Name: Parameter Type) => return nothing
     onAdd: (job: JobApplication) => void;
+    editingApplication: JobApplication | null;
+    onUpdate: (updatedJob: JobApplication) => void; // to handle updates
+    onCancelEdit: () => void;
 }
 
-const ApplicationForm = ({ onAdd }: Props) => {
+const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: Props) => {
     type FormState = Omit<JobApplication, "id">; // Omit<Type, Keys>
 
     const initialState: FormState = {
@@ -20,25 +23,46 @@ const ApplicationForm = ({ onAdd }: Props) => {
 
     const [form, setForm] = useState<FormState>(initialState);
 
+    // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target as HTMLInputElement | HTMLSelectElement;
         setForm(prev => ({ ...prev, [name]: value }));
     };
 
+    // Handle form submit: add or update depending on editingApplication
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault(); // Stop page reload
 
-        const newApplication: JobApplication = {
-            id: uuidv4(),
-            ...form,
-        };
-        onAdd(newApplication) // Call parent handler - tell the parent about it
-        
-        // Reset form fields after submission
-        setForm(initialState);
+        if (editingApplication) {
+            // Update existing app
+            onUpdate({ id: editingApplication.id, ...form });
+        } else {
+            const newApplication: JobApplication = {
+                id: uuidv4(),
+                ...form,
+            };
+            onAdd(newApplication) // Call parent handler - tell the parent about it
+            
+            // Reset form fields after submission
+            setForm(initialState);
 
-        console.log("Submitted", newApplication);
+            console.log("Submitted", newApplication);
+        }
+        
     };
+
+    // Sync form when editingApplication changes
+    useEffect(() => {
+        if (editingApplication) {
+            // Fill form with editingApplication data
+            const {id, ...rest } = editingApplication; // exclude id because form doesn't hold it
+            setForm(rest);
+        } else {
+            // Reset form when not editing
+            setForm(initialState);
+        }
+    }, [editingApplication]);
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -72,7 +96,12 @@ const ApplicationForm = ({ onAdd }: Props) => {
             </label>
             
 
-            <button type="submit">Add</button>
+            <button type="submit">{editingApplication ? "Update" : "Add"}</button>
+
+            {/* Optional cancel button when editing */}
+            {editingApplication && (
+                <button type="button" onClick={onCancelEdit}>Cancel</button>
+            )}
         </form>
     );
 };

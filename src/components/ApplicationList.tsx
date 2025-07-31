@@ -3,12 +3,19 @@ import ApplicationCard from "./ApplicationCard";
 
 interface Props {
     applications: JobApplication[]; // applications is expected to be an array of JobApplicatino objects
+    onDelete: (id: string) => void;
+    onEdit: (id: string) => void;
 }
 
-const ApplicationList = ({ applications }: Props) => ( //Receive the applications array as a prop
+const ApplicationList = ({ applications, onDelete, onEdit }: Props) => ( //Receive the applications array as a prop
     <div>
         {applications.map(app => (
-            <ApplicationCard key={app.id} application={app} />
+            <ApplicationCard 
+                key={app.id} 
+                application={app} 
+                onDelete={() => onDelete(app.id)}
+                onEdit={() => onEdit(app.id)}
+            />
         ))}
     </div>
 );
