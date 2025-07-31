@@ -1,1 +1,10 @@
 /* Use index.css for global/base styles like typography, colors, and layout resets. */
+@import "tailwindcss";
+
+.input-fields {
+    @apply rounded border w-full;
+}
+
+.error-message {
+    @apply text-red-600 text-sm min-h-[1rem];
+}

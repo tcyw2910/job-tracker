@@ -103,48 +103,109 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
     
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Company:
-                <input name="company" value={form.company} placeholder="Company" onChange={handleChange} aria-describedby="company-error"></input>
-            </label>
-            {formErrors.company && <p id="company-error">{formErrors.company}</p>}
-            
-            <label>
-                Position:
-                <input name="position" value={form.position} placeholder="Position" onChange={handleChange} aria-describedby="position-error"></input>
-            </label>
-            {formErrors.position && <p id="position-error">{formErrors.position}</p>}
+        <div className="bg-white rounded-lg shadow-md p-3 max-w-5xl mx-auto">
+            <form onSubmit={handleSubmit} className="grid sm:grid-cols-1 md:grid-cols-7 gap-6">
+                <div>
+                    <label>
+                        Company:
+                        <input 
+                            name="company" 
+                            value={form.company} 
+                            placeholder="Company" 
+                            onChange={handleChange} 
+                            aria-describedby="company-error"
+                            className="input-fields"
+                        >
+                        </input>
+                    </label>
+                    {formErrors.company && <p id="company-error" className="error-message">{formErrors.company}</p>}
+                </div>
+                <div>
+                    <label>
+                        Position:
+                        <input 
+                            name="position" 
+                            value={form.position} 
+                            placeholder="Position" 
+                            onChange={handleChange} 
+                            aria-describedby="position-error"
+                            className="input-fields"
+                        >
+                        </input>
+                    </label>
+                    {formErrors.position && <p id="position-error" className="error-message">{formErrors.position}</p>}
+                </div>
+                <div>
+                    <label>
+                        Location:
+                        <input 
+                            name="location" 
+                            value={form.location} 
+                            placeholder="Location" 
+                            onChange={handleChange} 
+                            aria-describedby="location-error"
+                            className="input-fields"
+                        >
+                        </input>
+                    </label>
+                    {formErrors.location && <p id="location-error" className="error-message">{formErrors.location}</p>}
+                </div>
+                <div>
+                    <label>
+                        Status:
+                        <select 
+                            name="status" 
+                            value={form.status} 
+                            onChange={handleChange}
+                            className="input-fields"
+                        >
+                            {StatusOptions.map(status => (
+                                <option key={status} value={status}>{status}</option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Date:
+                        <input 
+                            type="date" 
+                            name="date" 
+                            value={form.date} 
+                            onChange={handleChange} 
+                            aria-describedby="date-error" 
+                            className="input-fields"
+                        />
+                    </label>
+                    {formErrors.date && <p id="date-error" className="error-message">{formErrors.date}</p>}
+                </div>
 
-            <label>
-                Location:
-                <input name="location" value={form.location} placeholder="Location" onChange={handleChange} aria-describedby="location-error"></input>
-            </label>
-            {formErrors.location && <p id="location-error">{formErrors.location}</p>}
+                <div className={`flex justify-center`}>
+                    <button 
+                        type="submit" 
+                        className="bg-green-600 rounded-lg w-[70px] text-white hover:bg-green-700"
+                    >
+                        {editingApplication ? "Update" : "Add"}
+                    </button>  
+                </div>
+                 
 
-            <label>
-                Status:
-                <select name="status" value={form.status} onChange={handleChange}>
-                    {StatusOptions.map(status => (
-                        <option key={status} value={status}>{status}</option>
-                    ))}
-                </select>
-            </label>
-
-            <label>
-                Date:
-                <input type="date" name="date" value={form.date} onChange={handleChange} aria-describedby="date-error" />
-            </label>
-            {formErrors.date && <p id="date-error">{formErrors.date}</p>}
-            
-
-            <button type="submit">{editingApplication ? "Update" : "Add"}</button>
-
-            {/* Optional cancel button when editing */}
-            {editingApplication && (
-                <button type="button" onClick={onCancelEdit}>Cancel</button>
-            )}
-        </form>
+                {/* Optional cancel button when editing */}
+                {editingApplication && (
+                    <div className={`flex justify-center`}>
+                        <button 
+                            type="button" 
+                            onClick={onCancelEdit}
+                            className="bg-gray-600 text-white rounded-lg w-[70px] hover:bg-gray-700"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                
+                )}
+            </form>
+        </div>
+        
     );
 };
 

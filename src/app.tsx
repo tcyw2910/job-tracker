@@ -47,22 +47,25 @@ const App = () => {
   }, [applications])
 
   return (
-    <div>
-      <h1>Job Application Tracker</h1>
+    <div className="min-h-screen bg-green-300 flex justify-center items-start pt-10">
+      <div className="max-w-5xl w-full bg-red-300 shadow-lg rounded-lg p-6">
+        <h1 className="text-3xl text-center mb-4">Job Application Tracker</h1>
 
-      <ApplicationForm 
-        onAdd={addApplication} 
-        editingApplication={editingApplication}
-        onUpdate={handleUpdate}
-        onCancelEdit={handleCancelEdit}
-      />
+        <ApplicationForm 
+          onAdd={addApplication} 
+          editingApplication={editingApplication}
+          onUpdate={handleUpdate}
+          onCancelEdit={handleCancelEdit}
+        />
 
-      <ApplicationList 
-        applications={applications} 
-        onDelete={handleDelete} 
-        onEdit={handleEdit}
-      />
+        <ApplicationList 
+          applications={applications} 
+          onDelete={handleDelete} 
+          onEdit={handleEdit}
+        />
+      </div>
     </div>
+    
   );
 };
 
