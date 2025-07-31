@@ -33,6 +33,16 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault(); // Stop page reload
 
+        const errors = validateForm(form);
+        setFormErrors(errors);
+
+        // Check if there are any errors
+        const hasErrors = Object.values(errors).some(errorMsg => errorMsg !== "");
+
+        if (hasErrors) {
+            return; // Stop form submission if errors found
+        }
+
         if (editingApplication) {
             // Update existing app
             onUpdate({ id: editingApplication.id, ...form });
@@ -45,11 +55,39 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
             
             // Reset form fields after submission
             setForm(initialState);
-
-            console.log("Submitted", newApplication);
         }
-        
     };
+
+    const [formErrors, setFormErrors] = useState({
+        company: "",
+        position: "",
+        location: "",
+        date: "",
+    });
+
+    const validateForm = (formInput: FormState) => {
+        const errors = {
+            company: "",
+            position: "",
+            location: "",
+            date: "",
+        };
+
+        if (!formInput.company.trim()) {
+            errors.company = "Company is required";
+        }
+        if (!formInput.position.trim()) {
+            errors.position = "Position is required";
+        }
+        if (!formInput.location.trim()) {
+            errors.location = "Location is required";
+        }
+        if (!formInput.date.trim()) {
+            errors.date = "Date is required";
+        }
+
+        return errors;
+    }
 
     // Sync form when editingApplication changes
     useEffect(() => {
@@ -68,18 +106,21 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
         <form onSubmit={handleSubmit}>
             <label>
                 Company:
-                <input name="company" value={form.company} placeholder="Company" onChange={handleChange} required></input>
+                <input name="company" value={form.company} placeholder="Company" onChange={handleChange} aria-describedby="company-error"></input>
             </label>
+            {formErrors.company && <p id="company-error">{formErrors.company}</p>}
             
             <label>
                 Position:
-                <input name="position" value={form.position} placeholder="Position" onChange={handleChange} required></input>
+                <input name="position" value={form.position} placeholder="Position" onChange={handleChange} aria-describedby="position-error"></input>
             </label>
+            {formErrors.position && <p id="position-error">{formErrors.position}</p>}
 
             <label>
                 Location:
-                <input name="location" value={form.location} placeholder="Location" onChange={handleChange} required></input>
+                <input name="location" value={form.location} placeholder="Location" onChange={handleChange} aria-describedby="location-error"></input>
             </label>
+            {formErrors.location && <p id="location-error">{formErrors.location}</p>}
 
             <label>
                 Status:
@@ -92,8 +133,9 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
 
             <label>
                 Date:
-                <input type="date" name="date" value={form.date} onChange={handleChange}/>
+                <input type="date" name="date" value={form.date} onChange={handleChange} aria-describedby="date-error" />
             </label>
+            {formErrors.date && <p id="date-error">{formErrors.date}</p>}
             
 
             <button type="submit">{editingApplication ? "Update" : "Add"}</button>
