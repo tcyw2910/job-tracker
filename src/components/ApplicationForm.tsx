@@ -103,7 +103,7 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
     
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-3 max-w-5xl mx-auto">
+        <div className="bg-white/30 backdrop-blud-md border border-white/40 rounded-lg shadow-lg p-3 max-w-5xl mx-auto">
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-1 md:grid-cols-7 gap-6">
                 <div>
                     <label>
@@ -114,7 +114,7 @@ const ApplicationForm = ({ onAdd, editingApplication, onUpdate, onCancelEdit }: 
                             placeholder="Company" 
                             onChange={handleChange} 
                             aria-describedby="company-error"
-                            className="input-fields"
+                            className="input-fields ml-"
                         >
                         </input>
                     </label>

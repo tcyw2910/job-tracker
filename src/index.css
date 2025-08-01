@@ -1,8 +1,13 @@
 /* Use index.css for global/base styles like typography, colors, and layout resets. */
 @import "tailwindcss";
 
+.custom-bg-image {
+    /* background-image: linear-gradient(to right top, #d7e8f0, #d3e2f2, #d6d9f1, #dfd0eb, #eac6dd, #f1c1ce, #f3bebd, #efbeac, #e4c3a2, #d3c9a0, #bfcfa6, #aad3b3); */
+    background-image: linear-gradient(to right top, #d7e8f0, #c7dee8, #b7d4e1, #a7cad9, #96c0d2, #93bbd0, #91b5ce, #90b0cc, #9dadcb, #aaabc8, #b4a8c3, #bca7bc);
+}
+
 .input-fields {
-    @apply rounded border w-full;
+    @apply rounded w-full bg-white/10 backdrop-blur-md border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder:italic pl-1; 
 }
 
 .error-message {

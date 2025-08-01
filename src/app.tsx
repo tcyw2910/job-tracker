@@ -47,9 +47,9 @@ const App = () => {
   }, [applications])
 
   return (
-    <div className="min-h-screen bg-green-300 flex justify-center items-start pt-10">
-      <div className="max-w-5xl w-full bg-red-300 shadow-lg rounded-lg p-6">
-        <h1 className="text-3xl text-center mb-4">Job Application Tracker</h1>
+    <div className="min-h-screen custom-bg-image flex justify-center items-start pt-10">
+      <div className="max-w-5xl w-full rounded-lg p-6">
+        <h1 className="text-3xl text-start mb-4">Job Application Tracker</h1>
 
         <ApplicationForm 
           onAdd={addApplication} 

@@ -8,16 +8,20 @@ interface Props {
 }
 
 const ApplicationList = ({ applications, onDelete, onEdit }: Props) => ( //Receive the applications array as a prop
-    <div>
-        {applications.map(app => (
-            <ApplicationCard 
-                key={app.id} 
-                application={app} 
-                onDelete={() => onDelete(app.id)}
-                onEdit={() => onEdit(app.id)}
-            />
-        ))}
-    </div>
+    
+    // <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-4 gap-5">
+            {applications.map(app => (
+                <ApplicationCard 
+                    key={app.id} 
+                    application={app} 
+                    onDelete={() => onDelete(app.id)}
+                    onEdit={() => onEdit(app.id)}
+                />
+            ))}
+        </div>
+    // </div>
+    
 );
 
 export default ApplicationList;
